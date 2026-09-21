@@ -2,19 +2,19 @@
 
 A Bash script, `server-stats.sh`, that analyses basic server performance stats on any Linux server.
 
-Project idea from [roadmap.sh](https://roadmap.sh/projects/server-stats).
+Project idea from [https://roadmap.sh/projects/server-stats](https://roadmap.sh/projects/server-stats).
 
 ## What it reports
 
-| Section | Details |
-|---|---|
-| System info | OS version, kernel, hostname, uptime, load average, logged-in users |
-| Total CPU usage | Used and idle percentage, sampled over 1 second from `/proc/stat` |
-| Memory usage | Total, used and free in MiB, with percentages, plus available memory |
-| Disk usage | Total, used and free in GiB, with percentages. Sums real filesystems and skips tmpfs, devtmpfs, squashfs, overlay and efivarfs |
-| Top 5 processes by CPU | PID, user, %CPU, %MEM, command |
-| Top 5 processes by memory | PID, user, %CPU, %MEM, command |
-| Failed login attempts | Count from `lastb`, `/var/log/auth.log` or the systemd journal, whichever is available |
+| Section                   | Details                                                                                                                        |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| System info               | OS version, kernel, hostname, uptime, load average, logged-in users                                                            |
+| Total CPU usage           | Used and idle percentage, sampled over 1 second from `/proc/stat`                                                              |
+| Memory usage              | Total, used and free in MiB, with percentages, plus available memory                                                           |
+| Disk usage                | Total, used and free in GiB, with percentages. Sums real filesystems and skips tmpfs, devtmpfs, squashfs, overlay and efivarfs |
+| Top 5 processes by CPU    | PID, user, %CPU, %MEM, command                                                                                                 |
+| Top 5 processes by memory | PID, user, %CPU, %MEM, command                                                                                                 |
+| Failed login attempts     | Count from `lastb`, `/var/log/auth.log` or the systemd journal, whichever is available                                         |
 
 ## Requirements
 
