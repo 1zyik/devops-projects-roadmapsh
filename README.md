@@ -2,9 +2,6 @@
 
 This repository contains a list of my solutions for the [roadmap.sh devops projects](https://roadmap.sh/devops/projects).
 
-- Projects folders are prefixed with the difficulty level (Beginner, Intermediate, Advanced).
-  - Beginner - b-
-  - Intermediate - i-
-  - Advanced - a-
+- Projects folders are categorized with the difficulty level (Beginner, Intermediate, Advanced).
 - Each project has it's respective README.md file with a description of the project and how to run it.
 - Enjoy!!
