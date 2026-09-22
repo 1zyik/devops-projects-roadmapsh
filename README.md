@@ -8,6 +8,7 @@ This repository contains a list of my solutions for the [roadmap.sh devops proje
 
 ### Beginner Projects
 
-| s/n | Title                    | Project Link                             |
-| --- | ------------------------ | ---------------------------------------- |
-| 1   | Server Performance Stats | https://roadmap.sh/projects/server-stats |
+| S/N | Title                    | Project Link                                 |
+| --- | ------------------------ | -------------------------------------------- |
+| 1   | Server Performance Stats | https://roadmap.sh/projects/server-stats     |
+| 2   | Log Archival Tool        | https://roadmap.sh/projects/log-archive-tool |

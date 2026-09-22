@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# log-archive - compress a log directory into a timestamped tar.gz archive.
+set -euo pipefail
+
+usage() {
+    cat <<'EOF'
+Usage: log-archive <log-directory> [archive-directory]
+
+Compresses <log-directory> into a timestamped tar.gz archive and stores it in
+[archive-directory] (default: ~/log_archives). Each run is also recorded in
+<archive-directory>/archive.log with the date, time, source directory and
+resulting archive file.
+
+Environment:
+  LOG_ARCHIVE_DIR   Overrides the default archive directory when
+                     [archive-directory] is not given on the command line.
+
+Examples:
+  log-archive /var/log
+  log-archive /var/log /backup/log_archives
+  LOG_ARCHIVE_DIR=/backup/log_archives log-archive /var/log
+EOF
+}
+
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+    usage
+    exit 0
+fi
+
+if [ $# -lt 1 ]; then
+    echo "Error: missing <log-directory> argument." >&2
+    usage >&2
+    exit 1
+fi
+
+log_dir=$1
+archive_dir=${2:-${LOG_ARCHIVE_DIR:-$HOME/log_archives}}
+
+if [ ! -d "$log_dir" ]; then
+    echo "Error: '$log_dir' is not a directory." >&2
+    exit 1
+fi
+
+if [ ! -r "$log_dir" ]; then
+    echo "Error: '$log_dir' is not readable (try running with sudo)." >&2
+    exit 1
+fi
+
+mkdir -p "$archive_dir"
+
+log_dir_abs=$(cd "$log_dir" && pwd)
+archive_dir_abs=$(cd "$archive_dir" && pwd)
+parent_dir=$(dirname "$log_dir_abs")
+base_name=$(basename "$log_dir_abs")
+
+timestamp=$(date +%Y%m%d_%H%M%S)
+archive_name="logs_archive_${timestamp}.tar.gz"
+archive_path="$archive_dir_abs/$archive_name"
+log_file="$archive_dir_abs/archive.log"
+
+# If the archive directory lives inside the log directory, exclude it so a
+# previous archive isn't swept into the next one.
+case "$archive_dir_abs" in
+    "$log_dir_abs" | "$log_dir_abs"/*)
+        tar -czf "$archive_path" --exclude="$(basename "$archive_dir_abs")" -C "$parent_dir" "$base_name"
+        ;;
+    *)
+        tar -czf "$archive_path" -C "$parent_dir" "$base_name"
+        ;;
+esac
+
+size=$(du -h "$archive_path" | cut -f1)
+run_date=$(date '+%Y-%m-%d %H:%M:%S')
+
+printf '%s | source=%s | archive=%s | size=%s\n' \
+    "$run_date" "$log_dir_abs" "$archive_path" "$size" >> "$log_file"
+
+echo "Archived '$log_dir_abs' -> '$archive_path' ($size)"
+echo "Logged to '$log_file'"
