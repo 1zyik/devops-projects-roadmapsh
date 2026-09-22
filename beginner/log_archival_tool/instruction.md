@@ -2,14 +2,13 @@ In this project, you will build a tool to archive logs on a set schedule by comp
 
 The most common location for logs on a unix based system is /var/log.
 
-Requirements:
+## Requirements:
 
 The tool should run from the command line, accept the log directory as an argument, compress the logs, and store them in a new directory. The user should be able to:
 
 Provide the log directory as an argument when running the tool.
 
 ```bash
-
 log-archive <log-directory>
 ```
 
